@@ -19,30 +19,19 @@ package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
-import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 
 /**
  *
  * @author Charles Joseph Staal
  */
-public class InputHandler implements Handler{
+public class MessageBuilder {
 
-    private final Queue<SystemMessage> systemQueue;
-    private final Queue<ChatMessage> outputQueue;
-    
-    public InputHandler(Queue<SystemMessage> systemQueue, Queue<ChatMessage> outputQueue){
-        this.systemQueue = systemQueue;
-        this.outputQueue = outputQueue;
+    static ChatMessage chatMessage(Message message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    @Override
-    public void handleMessage(Object message) {
-        
-        if(((Message)message).getMessage().contains("CHAT")){
-            outputQueue.add(MessageBuilder.chatMessage((Message)message));
-        } else if(((Message)message).getMessage().contains("SYSTEM")){
-            systemQueue.add(MessageBuilder.systemMessage((Message)message));
-        }
+
+    static SystemMessage systemMessage(Message message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

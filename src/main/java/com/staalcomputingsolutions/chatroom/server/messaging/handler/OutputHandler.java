@@ -16,11 +16,17 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
+import com.staalcomputingsolutions.chatroom.server.impl.Communicator;
+
 /**
  *
  * @author Charles Joseph Staal
  */
 public class OutputHandler implements Handler{
+
+    public OutputHandler(Communicator communicator) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public void handleMessage(Object take) {

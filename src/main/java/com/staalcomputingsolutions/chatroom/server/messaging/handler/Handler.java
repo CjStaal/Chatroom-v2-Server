@@ -20,7 +20,7 @@ package com.staalcomputingsolutions.chatroom.server.messaging.handler;
  *
  * @author Charles Joseph Staal
  */
-public interface Handler {
+public interface Handler<T> {
 
-    public void handleMessage(Object take);
+    public void handleMessage(T take);
 }

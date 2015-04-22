@@ -18,16 +18,22 @@ package com.staalcomputingsolutions.chatroom.server.impl;
 
 import com.staalcomputingsolutions.chatroom.server.messaging.executor.Executor;
 import com.staalcomputingsolutions.chatroom.server.messaging.handler.Handler;
+import com.staalcomputingsolutions.chatroom.server.messaging.handler.InputHandler;
+import com.staalcomputingsolutions.chatroom.server.messaging.handler.OutputHandler;
+import com.staalcomputingsolutions.chatroom.server.messaging.handler.SystemHandler;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
+import com.staalcomputingsolutions.chatroom.server.users.UserManager;
 
 /**
  *
  * @author Charles Joseph Staal
  */
 public class DefaultChatServerContext implements ChatServerContext{
+    
+    private UserManager userManager;
 
     private Queue<Message> inputQueue;
     private Queue<ChatMessage> outputQueue;
@@ -37,12 +43,15 @@ public class DefaultChatServerContext implements ChatServerContext{
     private Executor outputExecutor;
     private Executor systemExecutor;
     
-    private Handler inputHandler;
-    private Handler outputHandler;
-    private Handler systemHandler;
+    private Handler<Message> inputHandler;
+    private Handler<ChatMessage> outputHandler;
+    private Handler<SystemMessage> systemHandler;
+    
+    private Communicator communicator;
 
     public DefaultChatServerContext() {
 
+        
         inputExecutor = new Executor();
         outputExecutor = new Executor();
         systemExecutor = new Executor();
@@ -51,9 +60,21 @@ public class DefaultChatServerContext implements ChatServerContext{
         outputQueue = new Queue(outputExecutor);
         systemQueue = new Queue(systemExecutor);
         
+        inputHandler = new InputHandler(systemQueue, outputQueue);
+        outputHandler = new OutputHandler(communicator);
+        systemHandler = new SystemHandler();
+        
         inputExecutor.setQueue(inputQueue);
+        inputExecutor.setHandler(inputHandler);
+        
         outputExecutor.setQueue(outputQueue);
+        outputExecutor.setHandler(outputHandler);
+        
         systemExecutor.setQueue(systemQueue);
+        systemExecutor.setHandler(systemHandler);
+        
+        
+        
     }
 
     @Override

@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 2015 Charles Joseph Staal
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,12 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.queues.output;
+package com.staalcomputingsolutions.chatroom.server.messaging.messages;
 
 /**
  *
  * @author Charles Joseph Staal
  */
-public class ChatExecutor {
+public class Message {
+ 
+    private final String uuid;
+    private String message;
+    
+    public Message(String uuid) {
+        this.uuid = uuid;
+    }
+    
+    public Message setMessage(String message){
+        this.message = message;
+        return this;
+    }
+    
+    public String getUUID(){
+        return this.uuid;
+    }
+    
+    public String getMessage(){
+        return this.message;
+    }
     
 }

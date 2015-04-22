@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.queues.system;
+package com.staalcomputingsolutions.chatroom.server.messaging.executors;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,19 +23,16 @@ import java.util.concurrent.Executors;
  *
  * @author Charles Joseph Staal
  */
-public class SystemQueueExecutor implements Runnable {
-
+public class QueueExecutor extends Executor {
     private final ExecutorService executor;
-
-    private final SystemQueue systemQueue;
 
     private boolean started = false;
 
-    public SystemQueueExecutor(SystemQueue systemQueue) {
-        this.systemQueue = systemQueue;
+    public QueueExecutor() {
         executor = Executors.newSingleThreadExecutor();
     }
 
+    @Override
     public void start() {
         if (started) {
 
@@ -44,11 +41,14 @@ public class SystemQueueExecutor implements Runnable {
         }
     }
 
-    @Override
-    public void run() {
-        while (!systemQueue.isEmpty()) {
-            SystemExecutor.execute(systemQueue.take());
-        }
+
+    public void stop() {
+        started = false;
     }
 
+    @Override
+    public void run() {
+        started = true;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

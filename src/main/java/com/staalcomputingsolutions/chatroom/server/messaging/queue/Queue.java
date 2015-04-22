@@ -14,40 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.queues.input;
+package com.staalcomputingsolutions.chatroom.server.messaging.queue;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.queues.output.ChatMessage;
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.Executor;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * This is the object used to queue the messages that are outgoing. This is a
- * class, initialize in the creation of the server and then only use the methods
- * there on out.
- *
- * This object uses the singleton pattern to ensure there is only one of these
- * objects ever created.
- *
- * This class wraps the LinkedBlockinQueue class.
- *
- * Call {@link #getInstance()} to obtain the class object.
- *
  * @author Charles Joseph Staal
+ * @param <T> The type of message.
  */
-public final class InputQueue {
+public final class Queue<T> {
 
-    private final BlockingQueue<Message> inputQueue;
+    private final BlockingQueue<T> queue;
 
-    private final InputQueueExecutor inputQueueExecutor;
+    private final Executor queueExecutor;
 
     /**
-     * <strong>DO NOT USE DIRECTLY</strong>
-     * This is the constructor for the 
+     * @param queueExecutor
      */
-    public InputQueue() {
-        this.inputQueue = new LinkedBlockingQueue();
-        this.inputQueueExecutor = new InputQueueExecutor();
+    public Queue(Executor queueExecutor) {
+        this.queue = new LinkedBlockingQueue();
+        this.queueExecutor = queueExecutor;
     }
 
     /**
@@ -56,9 +45,9 @@ public final class InputQueue {
      * @param message
      * @return
      */
-    public synchronized boolean add(Message message) {
-        if (this.inputQueue.add(message)) {
-            this.inputQueueExecutor.start();
+    public synchronized boolean add(T message) {
+        if (this.queue.add(message)) {
+            this.queueExecutor.start();
             return true;
         } else {
             return false;
@@ -70,15 +59,15 @@ public final class InputQueue {
      * @
      */
     public synchronized void clear() {
-        this.inputQueue.clear();
+        this.queue.clear();
     }
 
     /**
      *
      * @return @
      */
-    public synchronized Message element() {
-        return this.inputQueue.element();
+    public synchronized T element() {
+        return this.queue.element();
     }
 
     /**
@@ -86,7 +75,7 @@ public final class InputQueue {
      * @return @
      */
     public synchronized boolean isEmpty() {
-        return this.inputQueue.isEmpty();
+        return this.queue.isEmpty();
     }
 
     /**
@@ -94,23 +83,23 @@ public final class InputQueue {
      * @return @
      */
     public synchronized Iterator iterator() {
-        return this.inputQueue.iterator();
+        return this.queue.iterator();
     }
 
     /**
      *
      * @return @
      */
-    public synchronized Message peek() {
-        return this.inputQueue.peek();
+    public synchronized T peek() {
+        return this.queue.peek();
     }
 
     /**
      *
      * @return @
      */
-    public synchronized Message poll() {
-        return this.inputQueue.poll();
+    public synchronized T poll() {
+        return this.queue.poll();
     }
 
     /**
@@ -119,8 +108,8 @@ public final class InputQueue {
      * @throws InterruptedException
      * @
      */
-    public synchronized void put(Message message) throws InterruptedException {
-        this.inputQueue.put(message);
+    public synchronized void put(T message) throws InterruptedException {
+        this.queue.put(message);
     }
 
     /**
@@ -128,7 +117,7 @@ public final class InputQueue {
      * @return @
      */
     public synchronized int remainingCapacity() {
-        return this.inputQueue.remainingCapacity();
+        return this.queue.remainingCapacity();
     }
 
     /**
@@ -136,14 +125,14 @@ public final class InputQueue {
      * @return @
      */
     public synchronized int size() {
-        return this.inputQueue.size();
+        return this.queue.size();
     }
 
     /**
      *
      * @return @throws InterruptedException
      */
-    public synchronized Message take() throws InterruptedException {
-        return this.inputQueue.take();
+    public synchronized T take() throws InterruptedException {
+        return this.queue.take();
     }
 }

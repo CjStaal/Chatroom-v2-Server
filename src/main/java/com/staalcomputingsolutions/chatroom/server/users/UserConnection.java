@@ -16,8 +16,8 @@
  */
 package com.staalcomputingsolutions.chatroom.server.users;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.queues.input.Message;
-import com.staalcomputingsolutions.chatroom.server.messaging.queues.input.InputQueue;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
+import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -41,11 +41,11 @@ public class UserConnection {
     private OutputStream outputStream;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
-    private InputQueue inputQueue;
+    private Queue<Message> inputQueue;
 
     private static final Logger logger = LoggerFactory.getLogger(UserConnection.class);
 
-    public UserConnection(Socket socket, String privateUUID, InputQueue inputQueue) {
+    public UserConnection(Socket socket, String privateUUID, Queue<Message> inputQueue) {
         logger.debug("Creating UserConnection object with private UUID of: " + privateUUID + ".");
         this.socket = socket;
         this.privateUUID = privateUUID;

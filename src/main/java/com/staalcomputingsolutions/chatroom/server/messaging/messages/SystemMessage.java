@@ -1,7 +1,7 @@
 /*
  * Copyright [2015] [Charles Joseph Staal]
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.queues.system;
+package com.staalcomputingsolutions.chatroom.server.messaging.messages;
 
 import java.net.Socket;
 import java.util.List;
@@ -10,14 +10,13 @@ import java.util.List;
  *
  * @author Charles Joseph Staal
  */
-public class SystemMessage extends java.util.EventObject {
+public class SystemMessage {
     private String uuid, userName, command, hashedPass;
     private List<String> other;
     private Socket socket;
     private Object object;
     
-    public SystemMessage(SystemQueue source){
-        super(source);
+    public SystemMessage(){
         
     }
     
@@ -82,10 +81,5 @@ public class SystemMessage extends java.util.EventObject {
     
     public List<String> getOther(){
         return this.other;
-    }
-    
-    @Override
-    public SystemQueue getSource(){
-        return (SystemQueue) super.getSource();
     }
 }

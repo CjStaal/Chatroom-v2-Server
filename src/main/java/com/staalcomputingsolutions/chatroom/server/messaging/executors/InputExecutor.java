@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.queues.input;
+package com.staalcomputingsolutions.chatroom.server.messaging.executors;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,33 +23,33 @@ import java.util.concurrent.Executors;
  *
  * @author Charles Joseph Staal
  */
-public class InputQueueExecutor {
+public class InputExecutor extends Executor {
+
     private final ExecutorService executor;
 
     private boolean started = false;
 
-    public InputQueueExecutor() {
+    public InputExecutor() {
         executor = Executors.newSingleThreadExecutor();
     }
 
+    @Override
     public void start() {
         if (started) {
 
         } else {
-            executor.execute(new InputExecutor());
+            executor.execute(this);
         }
     }
-    
-    public void stop(){
-        
+
+
+    public void stop() {
+        started = false;
     }
 
-    public class InputExecutor implements Runnable {
-
-        @Override
-        public void run() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
+    @Override
+    public void run() {
+        started = true;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

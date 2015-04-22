@@ -41,8 +41,6 @@ public class UserManager {
      * initiate the ConcurrentHashMaps.
      */
     public UserManager() {
-        logger.debug("Constructing UserManager class. class name= " + this.getClass().getName());
-
         this.userList = new ArrayList();
 
         logger.debug("UserManager class created. class name= " + this.getClass().getName());
@@ -52,9 +50,6 @@ public class UserManager {
      * @param userConnection The clients userConnection object.
      */
     public synchronized void addClient(UserConnection userConnection) {
-
-        logger.debug("Adding client.");
-
         this.userList.add(userConnection);
 
         logger.debug("Client added.");

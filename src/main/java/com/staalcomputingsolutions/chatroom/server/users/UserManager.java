@@ -32,23 +32,26 @@ public class UserManager {
 
     /**
      * This ConcurrentHashMap maps the private UUID to the Username of the
-     * client. key = private UUID, value=Username.
+     * client.
+     * key = private UUID, value=Username.
      */
     private final ConcurrentHashMap<String, String> publicUUIDToUsername;
     /**
      * This ConcurrentHashMap maps the private UUID to the public UUID of the
-     * client. key = private UUID, value=public UUID.
+     * client.
+     * key = private UUID, value=public UUID.
      */
     private final ConcurrentHashMap<String, String> privateUUIDToPublicUUID;
     /**
      * This ConcurrentHashMap maps the public UUID to the private UUID of the
-     * client. key = public UUID, value=private UUID.
+     * client.
+     * key = public UUID, value=private UUID.
      */
     private final ConcurrentHashMap<String, String> publicUUIDToPrivateUUID;
     /**
      * This ConcurrentHashMap maps the private UUID to the UserConnection object
-     * that the specific client is currently using. key = private UUID,
-     * value=Clients UserConnection.
+     * that the specific client is currently using.
+     * key = private UUID, value=Clients UserConnection.
      */
     private final ConcurrentHashMap<String, UserConnection> privateUUIDToUserConnection;
 
@@ -106,12 +109,12 @@ public class UserManager {
     public synchronized void removeClient(String privateUUID) {
 
         logger.debug("Removing client.\nPrivate UUID: " + privateUUID + ".");
-        
+
         if (!this.privateUUIDToUserConnection.get(privateUUID).getSocket().isClosed()) {
             logger.debug("UserManager closing socket of client with private UUID of : " + privateUUID + ".");
-            
+
             this.privateUUIDToUserConnection.get(privateUUID).close();
-            
+
             logger.debug("UserManager closed socket of client with private UUID of : " + privateUUID + ".");
         } else {
             logger.debug("UserManager attempted to socket of client with private UUID of : " + privateUUID
@@ -123,7 +126,7 @@ public class UserManager {
 
         this.privateUUIDToPublicUUID.remove(privateUUID);
         this.privateUUIDToUserConnection.remove(privateUUID);
-        
+
         logger.debug("Client removed.\nPrivate UUID: " + privateUUID + ".");
     }
 
@@ -147,6 +150,24 @@ public class UserManager {
     public synchronized ConcurrentHashMap<String, UserConnection> getConnectionMap() {
         logger.debug("ConcurrentHashMap privateUUIDToUserConnection being fetched.");
         return this.privateUUIDToUserConnection;
+    }
+
+    /**
+     *
+     * @param publicUUID
+     * @return
+     */
+    public String getPrivateUUIDFromPublicUUID(String publicUUID) {
+        return this.publicUUIDToPrivateUUID.get(publicUUID);
+    }
+
+    /**
+     *
+     * @param privateUUID
+     * @return
+     */
+    public String getPublicUUIDFromPrivateUUID(String privateUUID) {
+        return this.privateUUIDToPublicUUID.get(privateUUID);
     }
 
 }

@@ -17,7 +17,7 @@
 package com.staalcomputingsolutions.chatroom.server.users;
 
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
-import com.staalcomputingsolutions.chatroom.server.messaging.queues.InputQueue;
+import com.staalcomputingsolutions.chatroom.server.messaging.queues.input.InputQueue;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -50,21 +50,21 @@ public class UserConnection {
         this.socket = socket;
         this.privateUUID = privateUUID;
         this.inputQueue = InputQueue.getInstance();
-        
+
         try {
             this.inputStream = this.socket.getInputStream();
             this.dataInputStream = new DataInputStream(this.inputStream);
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(UserConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             this.outputStream = this.socket.getOutputStream();
             this.dataOutputStream = new DataOutputStream(this.outputStream);
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(UserConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         logger.debug("UserConnection object created with private UUID of: " + this.privateUUID + ".");
     }
 
@@ -83,7 +83,9 @@ public class UserConnection {
 
     public boolean receiveMessage() {
         try {
+            logger.debug("Checking to see if user with privateUUID: " + privateUUID + " has tried sending a message.");
             if (this.getDataInputStream().available() > 0) {
+                logger.debug("Receiving message from user with privateUUID: " + privateUUID + ".");
                 inputQueue.add(
                         new Message(privateUUID)
                         .setMessage(this.getDataInputStream().readUTF()));
@@ -91,6 +93,7 @@ public class UserConnection {
             return true;
         } catch (IOException ex) {
             this.close();
+            logger.debug("User with privateUUID: " + privateUUID + " is no longer connected, threw a IOException when attempting to receive.");
             return false;
         }
     }

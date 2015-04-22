@@ -39,6 +39,7 @@ public class DefaultChatServerContext {
     private SystemExecutor systemExecutor;
 
     public DefaultChatServerContext() {
+        
         inputExecutor = new InputExecutor();
         outputExecutor = new OutputExecutor();
         systemExecutor = new SystemExecutor();

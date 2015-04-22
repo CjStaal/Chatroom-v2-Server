@@ -20,6 +20,19 @@ package com.staalcomputingsolutions.chatroom.server.messaging.messages;
  *
  * @author Charles Joseph Staal
  */
-public class SystemMessage extends DefaultMessage{
+public class SystemMessage extends DefaultMessage {
+
+    private String command;
     
+    public SystemMessage() {
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public String getCommand() {
+        return this.command;
+    }
+
 }

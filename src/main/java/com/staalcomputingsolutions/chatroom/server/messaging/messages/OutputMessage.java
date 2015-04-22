@@ -20,6 +20,37 @@ package com.staalcomputingsolutions.chatroom.server.messaging.messages;
  *
  * @author Charles Joseph Staal
  */
-public class OutputMessage extends DefaultMessage{
-    
+public class OutputMessage extends DefaultMessage {
+
+    private boolean publicMessage = false, chatMessage = false;
+
+    private String privateUUIDOfRecipiant;
+
+    public OutputMessage() {
+        super();
+    }
+
+    public void setChatMessage(boolean chatMessage) {
+        this.chatMessage = chatMessage;
+    }
+
+    public void setPublicMessage(boolean publicMessage) {
+        this.publicMessage = publicMessage;
+    }
+
+    public void setPrivateUUIDOfRecipiant(String privateUUIDOfRecipiant) {
+        this.privateUUIDOfRecipiant = privateUUIDOfRecipiant;
+    }
+
+    public String getPrivateUUIDOfRecipiant() {
+        return privateUUIDOfRecipiant;
+    }
+
+    public boolean isChatMessage() {
+        return chatMessage;
+    }
+
+    public boolean isPublicMessage() {
+        return publicMessage;
+    }
 }

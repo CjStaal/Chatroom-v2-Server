@@ -14,18 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server;
+package com.staalcomputingsolutions.chatroom.server.impl;
 
 /**
  *
  * @author Charles Joseph Staal
  */
-public class DefaultChatServer {
+public class DefaultChatServerContext {
     
-    private boolean started = false, suspended = false;
-    
-    private ChatServerContext serverContext;
-    public DefaultChatServer(ChatServerContext serverContext){
-        this.serverContext = serverContext;
-    }
 }

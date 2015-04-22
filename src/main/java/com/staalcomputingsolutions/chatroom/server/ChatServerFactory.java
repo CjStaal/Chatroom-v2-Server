@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Charles Joseph Staal
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,6 @@ package com.staalcomputingsolutions.chatroom.server;
  *
  * @author Charles Joseph Staal
  */
-public class DefaultChatServerContext {
+public class ChatServerFactory {
     
 }

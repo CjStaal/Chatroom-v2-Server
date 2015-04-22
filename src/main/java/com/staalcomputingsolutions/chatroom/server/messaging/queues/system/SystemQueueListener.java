@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.queues.input;
+package com.staalcomputingsolutions.chatroom.server.messaging.queues.system;
 
 /**
  *
  * @author Charles Joseph Staal
  */
-public interface InputQueueListener extends java.util.EventListener{
-    public void eventQueued(Message m);
+public interface SystemQueueListener {
+    
 }

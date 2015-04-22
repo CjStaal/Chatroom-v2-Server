@@ -20,6 +20,6 @@ package com.staalcomputingsolutions.chatroom.server.messaging.queues.input;
  *
  * @author Charles Joseph Staal
  */
-public interface InputQueueListener extends java.util.EventListener{
-    public void eventQueued(Message m);
+public class InputQueueExecutor {
+    
 }

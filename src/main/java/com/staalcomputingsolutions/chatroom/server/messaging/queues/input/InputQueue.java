@@ -16,7 +16,6 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.queues.input;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;

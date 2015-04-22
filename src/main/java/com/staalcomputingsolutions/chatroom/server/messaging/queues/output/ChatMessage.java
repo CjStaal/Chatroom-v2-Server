@@ -1,7 +1,7 @@
 /*
  * Copyright [2015] [Charles Joseph Staal]
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.messages;
+package com.staalcomputingsolutions.chatroom.server.messaging.queues.output;
 
 /**
  *

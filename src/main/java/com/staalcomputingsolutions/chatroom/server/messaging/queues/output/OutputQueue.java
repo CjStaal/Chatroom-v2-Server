@@ -3,7 +3,6 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.queues.output;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;

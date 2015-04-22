@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 2015 Charles Joseph Staal
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,26 @@ package com.staalcomputingsolutions.chatroom.server.messaging.queues.input;
  *
  * @author Charles Joseph Staal
  */
-public interface InputQueueListener extends java.util.EventListener{
-    public void eventQueued(Message m);
+public class Message {
+ 
+    private final String uuid;
+    private String message;
+    
+    public Message(String uuid) {
+        this.uuid = uuid;
+    }
+    
+    public Message setMessage(String message){
+        this.message = message;
+        return this;
+    }
+    
+    public String getUUID(){
+        return this.uuid;
+    }
+    
+    public String getMessage(){
+        return this.message;
+    }
+    
 }

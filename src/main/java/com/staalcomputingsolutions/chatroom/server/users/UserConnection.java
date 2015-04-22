@@ -16,7 +16,7 @@
  */
 package com.staalcomputingsolutions.chatroom.server.users;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
+import com.staalcomputingsolutions.chatroom.server.messaging.queues.input.Message;
 import com.staalcomputingsolutions.chatroom.server.messaging.queues.input.InputQueue;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

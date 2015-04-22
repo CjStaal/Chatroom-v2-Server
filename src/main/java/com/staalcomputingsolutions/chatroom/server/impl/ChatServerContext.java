@@ -16,7 +16,7 @@
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.executors.Executor;
+import com.staalcomputingsolutions.chatroom.server.messaging.executor.Executor;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;

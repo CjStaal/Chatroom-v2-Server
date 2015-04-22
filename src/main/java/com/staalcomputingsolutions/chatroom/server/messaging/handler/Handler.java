@@ -14,17 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.executors;
+package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
 /**
  *
  * @author Charles Joseph Staal
  */
-public class OutputHandler implements Handler{
+public interface Handler {
 
-    @Override
-    public void handleMessage(Object take) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    public void handleMessage(Object take);
 }

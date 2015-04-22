@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.executors;
+package com.staalcomputingsolutions.chatroom.server.messaging.executor;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.handler.Handler;
 import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

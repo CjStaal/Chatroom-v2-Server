@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Charles Joseph Staal
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,15 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server.impl;
+package com.staalcomputingsolutions.chatroom.server.messaging.messages;
 
 /**
  *
  * @author Charles Joseph Staal
  */
-public class DefaultChatServerContext implements ChatServerContext {
-
-    public DefaultChatServerContext() {
-
-    }
+public abstract class DefaultMessage implements Message{
+    
 }

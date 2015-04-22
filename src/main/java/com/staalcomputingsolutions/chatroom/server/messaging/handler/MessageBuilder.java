@@ -16,8 +16,8 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.OutputMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
 
 /**
@@ -26,11 +26,15 @@ import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMess
  */
 public class MessageBuilder {
 
-    static ChatMessage chatMessage(Message message) {
+    public static OutputMessage outputMessage(Message message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    static SystemMessage systemMessage(Message message) {
+    public static SystemMessage systemMessage(Message message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static Message buildMessage(String privateUUID, String receiveMessage) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

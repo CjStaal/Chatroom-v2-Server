@@ -17,7 +17,6 @@
 package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
 import com.staalcomputingsolutions.chatroom.server.impl.Communicator;
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 
 /**
  *
@@ -33,21 +32,6 @@ public class OutputHandler implements Handler {
 
     @Override
     public void handleMessage(Object message) {
-        if (message instanceof ChatMessage) {
-            ChatMessage cm = (ChatMessage) message;
-            String from = cm.getSenderPrivateUUID();
-            String info[] = cm.getMessage().split("|");
-            StringBuilder sb = new StringBuilder();
-            if(info[0].equals("CHAT")){
-                sb.append("CHAT|");
-                
-            } else if(info[0].equals("SYSTEM")){
-                sb.append("SYSTEM|");
-            }
-            String info2[] = info[1].split(":");
-            if(info2[0].equals("PUBLIC")){
-            } else if()
-        }
 
     }
 

@@ -15,29 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
-
-import com.staalcomputingsolutions.chatroom.server.messaging.executor.Executor;
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
-import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
-
 /**
  *
  * @author Charles Joseph Staal
  */
 public interface ChatServerContext {
-
-    Executor getInputExecutor();
-
-    Queue<Message> getInputQueue();
-
-    Executor getOutputExecutor();
-
-    Queue<ChatMessage> getOutputQueue();
-
-    Executor getSystemExecutor();
-
-    Queue<SystemMessage> getSystemQueue();
-    
 }

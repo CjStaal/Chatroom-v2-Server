@@ -16,6 +16,7 @@
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.handler.MessageBuilder;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
 import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 import com.staalcomputingsolutions.chatroom.server.users.UserConnection;
@@ -109,7 +110,7 @@ public class Communicator {
                 for (UserConnection uc : userManager.getUserList()) {
                     try {
                         if(uc.messageAvailable()){
-                            inputQueue.add(new Message(uc.getPrivateUUID()).setMessage(uc.receiveMessage()));
+                            inputQueue.add(MessageBuilder.buildMessage(uc.getPrivateUUID(), uc.receiveMessage()));
                         }
                     } catch (IOException ex) {
                         java.util.logging.Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, ex);

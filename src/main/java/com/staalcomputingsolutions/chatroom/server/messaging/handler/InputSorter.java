@@ -16,8 +16,7 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
-import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.OutputMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 
@@ -28,21 +27,15 @@ import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 public class InputSorter implements Handler{
 
     private final Queue<SystemMessage> systemQueue;
-    private final Queue<ChatMessage> outputQueue;
+    private final Queue<OutputMessage> outputQueue;
     
-    public InputSorter(Queue<SystemMessage> systemQueue, Queue<ChatMessage> outputQueue){
+    public InputSorter(Queue<SystemMessage> systemQueue, Queue<OutputMessage> outputQueue){
         this.systemQueue = systemQueue;
         this.outputQueue = outputQueue;
     }
     
     @Override
     public void handleMessage(Object message) {
-        
-        if(((Message)message).getMessage().contains("CHAT")){
-            outputQueue.add(MessageBuilder.chatMessage((Message)message));
-        } else if(((Message)message).getMessage().contains("SYSTEM")){
-            systemQueue.add(MessageBuilder.systemMessage((Message)message));
-        }
     }
     
 }

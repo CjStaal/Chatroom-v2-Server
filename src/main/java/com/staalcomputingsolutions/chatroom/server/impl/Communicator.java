@@ -16,10 +16,14 @@
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
+import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 import com.staalcomputingsolutions.chatroom.server.users.UserConnection;
 import com.staalcomputingsolutions.chatroom.server.users.UserManager;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,14 +36,15 @@ public class Communicator {
 
     private final UserManager userManager;
     private final ExecutorService receivingThread;
-
+    private final Queue<Message> inputQueue;
     private boolean started = false;
 
     private static final Logger logger = LoggerFactory.getLogger(Communicator.class);
 
-    public Communicator(UserManager userManager) {
+    public Communicator(UserManager userManager, Queue<Message> inputQueue) {
         logger.debug("Creating communicator object.");
         this.userManager = userManager;
+        this.inputQueue = inputQueue;
         receivingThread = Executors.newSingleThreadExecutor();
         logger.debug("Created communicator object.");
     }
@@ -58,7 +63,7 @@ public class Communicator {
     }
     
     private void sendMessage(String message) {
-        for (UserConnection uc : this.userManager.getConnectionMap().values()) {
+        for (UserConnection uc : this.userManager.getUserList()) {
             if (!uc.sendMessage(message)) {
                 this.userManager.removeClient(uc.getPrivateUUID());
             }
@@ -101,9 +106,13 @@ public class Communicator {
         @Override
         public void run() {
             while (started) {
-                for (UserConnection uc : userManager.getConnectionMap().values()) {
-                    if (!uc.receiveMessage()) {
-                        userManager.removeClient(uc.getPrivateUUID());
+                for (UserConnection uc : userManager.getUserList()) {
+                    try {
+                        if(uc.messageAvailable()){
+                            inputQueue.add(new Message(uc.getPrivateUUID()).setMessage(uc.receiveMessage()));
+                        }
+                    } catch (IOException ex) {
+                        java.util.logging.Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }

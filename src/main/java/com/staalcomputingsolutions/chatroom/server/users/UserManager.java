@@ -16,6 +16,7 @@
  */
 package com.staalcomputingsolutions.chatroom.server.users;
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
@@ -30,30 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UserManager {
 
-    /**
-     * This ConcurrentHashMap maps the private UUID to the Username of the
-     * client.
-     * key = private UUID, value=Username.
-     */
-    private final ConcurrentHashMap<String, String> publicUUIDToUsername;
-    /**
-     * This ConcurrentHashMap maps the private UUID to the public UUID of the
-     * client.
-     * key = private UUID, value=public UUID.
-     */
-    private final ConcurrentHashMap<String, String> privateUUIDToPublicUUID;
-    /**
-     * This ConcurrentHashMap maps the public UUID to the private UUID of the
-     * client.
-     * key = public UUID, value=private UUID.
-     */
-    private final ConcurrentHashMap<String, String> publicUUIDToPrivateUUID;
-    /**
-     * This ConcurrentHashMap maps the private UUID to the UserConnection object
-     * that the specific client is currently using.
-     * key = private UUID, value=Clients UserConnection.
-     */
-    private final ConcurrentHashMap<String, UserConnection> privateUUIDToUserConnection;
+    private final ArrayList<UserConnection> userList;
 
     private static final Logger logger = LoggerFactory.getLogger(UserManager.class);
 
@@ -64,40 +42,21 @@ public class UserManager {
     public UserManager() {
         logger.debug("Constructing UserManager class. class name= " + this.getClass().getName());
 
-        this.publicUUIDToUsername = new ConcurrentHashMap();
-        this.privateUUIDToPublicUUID = new ConcurrentHashMap();
-        this.publicUUIDToPrivateUUID = new ConcurrentHashMap();
-        this.privateUUIDToUserConnection = new ConcurrentHashMap();
+        this.userList = new ArrayList();
 
         logger.debug("UserManager class created. class name= " + this.getClass().getName());
     }
 
     /**
-     * This method is used to add the clients information to the relevant
-     * ConcurrentHashMaps.
-     *
-     * @param privateUUID The clients private UUID.
-     * @param publicUUID The clients public UUID.
-     * @param username The clients username.
      * @param userConnection The clients userConnection object.
      */
-    public synchronized void addClient(String privateUUID, String publicUUID,
-            String username, UserConnection userConnection) {
+    public synchronized void addClient(UserConnection userConnection) {
 
-        logger.debug("Adding client."
-                + "\nUsername: " + username
-                + "\nPrivate UUID: " + privateUUID
-                + "\nPublic UUID: " + publicUUID + ".");
+        logger.debug("Adding client.");
 
-        this.publicUUIDToUsername.put(publicUUID, username);
-        this.privateUUIDToPublicUUID.put(privateUUID, publicUUID);
-        this.publicUUIDToPrivateUUID.put(publicUUID, privateUUID);
-        this.privateUUIDToUserConnection.put(privateUUID, userConnection);
+        this.userList.add(userConnection);
 
-        logger.debug("Client added."
-                + "\nUsername: " + username
-                + "\nPrivate UUID: " + privateUUID
-                + "\nPublic UUID: " + publicUUID + ".");
+        logger.debug("Client added.");
     }
 
     /**
@@ -107,27 +66,14 @@ public class UserManager {
      * @param privateUUID The private UUID of the client to be removed.
      */
     public synchronized void removeClient(String privateUUID) {
-
-        logger.debug("Removing client.\nPrivate UUID: " + privateUUID + ".");
-
-        if (!this.privateUUIDToUserConnection.get(privateUUID).getSocket().isClosed()) {
-            logger.debug("UserManager closing socket of client with private UUID of : " + privateUUID + ".");
-
-            this.privateUUIDToUserConnection.get(privateUUID).close();
-
-            logger.debug("UserManager closed socket of client with private UUID of : " + privateUUID + ".");
-        } else {
-            logger.debug("UserManager attempted to socket of client with private UUID of : " + privateUUID
-                    + " but it is already closed.");
+        removeClient(getUserConnectionFromPrivateUUID(privateUUID));
+    }
+    
+    public synchronized void removeClient(UserConnection uc){
+        if(!uc.getSocket().isClosed()){
+            uc.close();
         }
-
-        this.publicUUIDToPrivateUUID.remove(this.privateUUIDToPublicUUID.get(privateUUID));
-        this.publicUUIDToUsername.remove(this.privateUUIDToPublicUUID.get(privateUUID));
-
-        this.privateUUIDToPublicUUID.remove(privateUUID);
-        this.privateUUIDToUserConnection.remove(privateUUID);
-
-        logger.debug("Client removed.\nPrivate UUID: " + privateUUID + ".");
+        this.userList.remove(uc);
     }
 
     /**
@@ -136,20 +82,8 @@ public class UserManager {
      *
      * @return {@link ConcurrentHashMap} The relevant ConcurrentHashMap.
      */
-    public synchronized ConcurrentHashMap<String, String> getUserMap() {
-        logger.debug("ConcurrentHashMap publicUUIDToUsername being fetched.");
-        return this.publicUUIDToUsername;
-    }
-
-    /**
-     * This method is used to fetch the ConcurrentHashMap that has the private
-     * UUIDs mapped to the Users connection object.
-     *
-     * @return {@link ConcurrentHashMap} The relevant ConcurrentHashMap.
-     */
-    public synchronized ConcurrentHashMap<String, UserConnection> getConnectionMap() {
-        logger.debug("ConcurrentHashMap privateUUIDToUserConnection being fetched.");
-        return this.privateUUIDToUserConnection;
+    public synchronized ArrayList<UserConnection> getUserList() {
+        return this.userList;
     }
 
     /**
@@ -158,7 +92,12 @@ public class UserManager {
      * @return
      */
     public String getPrivateUUIDFromPublicUUID(String publicUUID) {
-        return this.publicUUIDToPrivateUUID.get(publicUUID);
+        for (UserConnection uc : userList) {
+            if (uc.getPublicUUID().equals(publicUUID)) {
+                return uc.getPrivateUUID();
+            }
+        }
+        return null;
     }
 
     /**
@@ -167,11 +106,22 @@ public class UserManager {
      * @return
      */
     public String getPublicUUIDFromPrivateUUID(String privateUUID) {
-        return this.privateUUIDToPublicUUID.get(privateUUID);
+        for (UserConnection uc : userList) {
+            if (uc.getPrivateUUID().equals(privateUUID)) {
+                return uc.getPublicUUID();
+            }
+        }
+        return null;
     }
-    
-    public UserConnection getUserConnectionFromPrivateUUID(String privateUUID){
-        return this.privateUUIDToUserConnection.get(privateUUID);
+
+    public UserConnection getUserConnectionFromPrivateUUID(String privateUUID) {
+        for (UserConnection uc : userList) {
+            if (uc.getPrivateUUID().equals(privateUUID)) {
+                return uc;
+            }
+        }
+        return null;
+
     }
 
 }

@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class UserConnection {
 
     private Socket socket;
-    private String privateUUID;
+    private String privateUUID, publicUUID, username;
     private InputStream inputStream;
     private OutputStream outputStream;
     private DataInputStream dataInputStream;
@@ -45,11 +45,13 @@ public class UserConnection {
 
     private static final Logger logger = LoggerFactory.getLogger(UserConnection.class);
 
-    public UserConnection(Socket socket, String privateUUID, Queue<Message> inputQueue) {
+    public UserConnection(Socket socket, String privateUUID, String publicUUID, String username, Queue<Message> inputQueue, UserManager um) {
         logger.debug("Creating UserConnection object with private UUID of: " + privateUUID + ".");
         this.socket = socket;
         this.privateUUID = privateUUID;
         this.inputQueue = inputQueue;
+        this.publicUUID = publicUUID;
+        this.username = username;
 
         try {
             this.inputStream = this.socket.getInputStream();
@@ -81,21 +83,12 @@ public class UserConnection {
         }
     }
 
-    public boolean receiveMessage() {
-        try {
-            logger.debug("Checking to see if user with privateUUID: " + privateUUID + " has tried sending a message.");
-            if (this.getDataInputStream().available() > 0) {
-                logger.debug("Receiving message from user with privateUUID: " + privateUUID + ".");
-                inputQueue.add(
-                        new Message(privateUUID)
-                        .setMessage(this.getDataInputStream().readUTF()));
-            }
-            return true;
-        } catch (IOException ex) {
-            this.close();
-            logger.debug("User with privateUUID: " + privateUUID + " is no longer connected, threw a IOException when attempting to receive.");
-            return false;
-        }
+    public boolean messageAvailable() throws IOException {
+        return (this.getDataInputStream().available() > 0);
+    }
+
+    public String receiveMessage() throws IOException {
+        return this.getDataInputStream().readUTF();
     }
 
     public Socket getSocket() {
@@ -120,6 +113,54 @@ public class UserConnection {
 
     public DataOutputStream getDataOutputStream() {
         return this.dataOutputStream;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void setPrivateUUID(String privateUUID) {
+        this.privateUUID = privateUUID;
+    }
+
+    public void setPublicUUID(String publicUUID) {
+        this.publicUUID = publicUUID;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
+
+    public void setOutputStream(OutputStream outputStream) {
+        this.outputStream = outputStream;
+    }
+
+    public void setDataInputStream(DataInputStream dataInputStream) {
+        this.dataInputStream = dataInputStream;
+    }
+
+    public void setDataOutputStream(DataOutputStream dataOutputStream) {
+        this.dataOutputStream = dataOutputStream;
+    }
+
+    public void setInputQueue(Queue<Message> inputQueue) {
+        this.inputQueue = inputQueue;
+    }
+
+    public String getPublicUUID() {
+        return publicUUID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Queue<Message> getInputQueue() {
+        return inputQueue;
     }
 
     public void close() {

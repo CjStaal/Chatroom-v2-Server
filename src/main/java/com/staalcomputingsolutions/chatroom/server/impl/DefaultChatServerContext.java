@@ -16,6 +16,9 @@
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.InputExecutor;
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.OutputExecutor;
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.SystemExecutor;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
@@ -26,7 +29,70 @@ import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
  * @author Charles Joseph Staal
  */
 public class DefaultChatServerContext {
+
     private Queue<Message> inputQueue;
     private Queue<ChatMessage> outputQueue;
     private Queue<SystemMessage> systemQueue;
+
+    private InputExecutor inputExecutor;
+    private OutputExecutor outputExecutor;
+    private SystemExecutor systemExecutor;
+
+    public DefaultChatServerContext() {
+        inputExecutor = new InputExecutor();
+        outputExecutor = new OutputExecutor();
+        systemExecutor = new SystemExecutor();
+
+        inputQueue = new Queue(inputExecutor);
+        outputQueue = new Queue(outputExecutor);
+        systemQueue = new Queue(systemExecutor);
+    }
+
+    public InputExecutor getInputExecutor() {
+        return inputExecutor;
+    }
+
+    public OutputExecutor getOutputExecutor() {
+        return outputExecutor;
+    }
+
+    public SystemExecutor getSystemExecutor() {
+        return systemExecutor;
+    }
+
+    public Queue<Message> getInputQueue() {
+        return this.inputQueue;
+    }
+
+    public Queue<ChatMessage> getOutputQueue() {
+        return this.outputQueue;
+    }
+
+    public Queue<SystemMessage> getSystemQueue() {
+        return this.systemQueue;
+    }
+
+    public void setInputExecutor(InputExecutor inputExecutor) {
+        this.inputExecutor = inputExecutor;
+    }
+
+    public void setOutputExecutor(OutputExecutor outputExecutor) {
+        this.outputExecutor = outputExecutor;
+    }
+
+    public void setSystemExecutor(SystemExecutor systemExecutor) {
+        this.systemExecutor = systemExecutor;
+    }
+
+    public void setInputQueue(Queue<Message> inputQueue) {
+        this.inputQueue = inputQueue;
+    }
+
+    public void setOutputQueue(Queue<ChatMessage> outputQueue) {
+        this.outputQueue = outputQueue;
+    }
+
+    public void setSystemQueue(Queue<SystemMessage> systemQueue) {
+        this.systemQueue = systemQueue;
+    }
 }

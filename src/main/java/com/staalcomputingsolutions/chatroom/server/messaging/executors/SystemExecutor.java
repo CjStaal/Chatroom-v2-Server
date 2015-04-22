@@ -20,7 +20,7 @@ package com.staalcomputingsolutions.chatroom.server.messaging.executors;
  *
  * @author Charles Joseph Staal
  */
-class SystemExecutor extends Executor {
+public class SystemExecutor extends Executor {
 
     public SystemExecutor() {
     }

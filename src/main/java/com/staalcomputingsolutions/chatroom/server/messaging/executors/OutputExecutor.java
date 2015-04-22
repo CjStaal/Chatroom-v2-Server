@@ -21,9 +21,9 @@ package com.staalcomputingsolutions.chatroom.server.messaging.executors;
  *
  * @author Charles Joseph Staal
  */
-public class QueueExecutor extends Executor {
+public class OutputExecutor extends Executor {
 
-    public QueueExecutor() {
+    public OutputExecutor() {
     }
 
     @Override

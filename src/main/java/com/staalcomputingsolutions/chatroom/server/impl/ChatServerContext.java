@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Charles Joseph Staal
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,30 @@
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.InputExecutor;
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.OutputExecutor;
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.SystemExecutor;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
+import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
+
 /**
  *
  * @author Charles Joseph Staal
  */
 public interface ChatServerContext {
+
+    InputExecutor getInputExecutor();
+
+    Queue<Message> getInputQueue();
+
+    OutputExecutor getOutputExecutor();
+
+    Queue<ChatMessage> getOutputQueue();
+
+    SystemExecutor getSystemExecutor();
+
+    Queue<SystemMessage> getSystemQueue();
     
 }

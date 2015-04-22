@@ -28,7 +28,7 @@ import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
  *
  * @author Charles Joseph Staal
  */
-public class DefaultChatServerContext {
+public class DefaultChatServerContext implements ChatServerContext{
 
     private Queue<Message> inputQueue;
     private Queue<ChatMessage> outputQueue;
@@ -49,26 +49,32 @@ public class DefaultChatServerContext {
         systemQueue = new Queue(systemExecutor);
     }
 
+    @Override
     public InputExecutor getInputExecutor() {
         return inputExecutor;
     }
 
+    @Override
     public OutputExecutor getOutputExecutor() {
         return outputExecutor;
     }
 
+    @Override
     public SystemExecutor getSystemExecutor() {
         return systemExecutor;
     }
 
+    @Override
     public Queue<Message> getInputQueue() {
         return this.inputQueue;
     }
 
+    @Override
     public Queue<ChatMessage> getOutputQueue() {
         return this.outputQueue;
     }
 
+    @Override
     public Queue<SystemMessage> getSystemQueue() {
         return this.systemQueue;
     }

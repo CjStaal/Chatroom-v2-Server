@@ -16,11 +16,48 @@
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
 
+import com.staalcomputingsolutions.chatroom.server.users.UserConnection;
+import com.staalcomputingsolutions.chatroom.server.users.UserManager;
+
 /**
  * This class is used to communicate to and from the clients.
- * 
+ *
  * @author Charles Joseph Staal
  */
 public class Communicator {
+
+    private UserManager userManager;
+
+    private boolean started = false;
     
+    public Communicator(UserManager userManager) {
+        this.userManager = userManager;
+    }
+
+    private void sendMessage(String message) {
+        for (UserConnection uc : this.userManager.getConnectionMap().values()) {
+            if (!uc.sendMessage(message)) {
+                this.userManager.removeClient(uc.getPrivateUUID());
+            }
+        }
+    }
+
+    public void start(){
+        this.started = true;
+    }
+    
+    public class MessageReceiver implements Runnable {
+
+        @Override
+        public void run() {
+            while (started) {
+                for (UserConnection uc : userManager.getConnectionMap().values()) {
+                    if (!uc.receiveMessage()) {
+                        userManager.removeClient(uc.getPrivateUUID());
+                    }
+                }
+            }
+        }
+
+    }
 }

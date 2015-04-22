@@ -18,6 +18,10 @@ package com.staalcomputingsolutions.chatroom.server.impl;
 
 import com.staalcomputingsolutions.chatroom.server.users.UserConnection;
 import com.staalcomputingsolutions.chatroom.server.users.UserManager;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class is used to communicate to and from the clients.
@@ -26,12 +30,18 @@ import com.staalcomputingsolutions.chatroom.server.users.UserManager;
  */
 public class Communicator {
 
-    private UserManager userManager;
+    private final UserManager userManager;
+    private final ExecutorService receivingThread;
 
     private boolean started = false;
-    
+
+    private static final Logger logger = LoggerFactory.getLogger(Communicator.class);
+
     public Communicator(UserManager userManager) {
+        logger.debug("Creating communicator object.");
         this.userManager = userManager;
+        receivingThread = Executors.newSingleThreadExecutor();
+        logger.debug("Created communicator object.");
     }
 
     private void sendMessage(String message) {
@@ -42,10 +52,32 @@ public class Communicator {
         }
     }
 
-    public void start(){
-        this.started = true;
+    public void start() {
+        if (this.started) {
+            logger.info("Communicator started already.");
+        } else {
+            logger.info("Starting communicator.");
+            this.started = true;
+            receivingThread.execute(new MessageReceiver());
+        }
+    }
+
+    public void stop() {
+        if (this.started) {
+            logger.info("Stopping communicator.");
+            this.started = false;
+            receivingThread.shutdown();
+            logger.info("Communicator stopped.");
+        } else {
+            logger.info("Communicator already stopped.");
+        }
     }
     
+    public void restart(){
+        this.stop();
+        this.start();
+    }
+
     public class MessageReceiver implements Runnable {
 
         @Override

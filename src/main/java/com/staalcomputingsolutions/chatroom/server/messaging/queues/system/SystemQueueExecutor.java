@@ -16,10 +16,38 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.queues.system;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  *
  * @author Charles Joseph Staal
  */
 public class SystemQueueExecutor {
-    
+
+    private ExecutorService executor;
+
+    private boolean started = false;
+
+    public SystemQueueExecutor() {
+        executor = Executors.newSingleThreadExecutor();
+    }
+
+    public void start() {
+        if (started) {
+
+        } else {
+            executor.execute(new SystemExecutor());
+        }
+    }
+
+    public class SystemExecutor implements Runnable {
+
+        @Override
+        public void run() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    }
+
 }

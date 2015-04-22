@@ -45,11 +45,11 @@ public class UserConnection {
 
     private static final Logger logger = LoggerFactory.getLogger(UserConnection.class);
 
-    public UserConnection(Socket socket, String privateUUID) {
+    public UserConnection(Socket socket, String privateUUID, InputQueue inputQueue) {
         logger.debug("Creating UserConnection object with private UUID of: " + privateUUID + ".");
         this.socket = socket;
         this.privateUUID = privateUUID;
-        this.inputQueue = InputQueue.getInstance();
+        this.inputQueue = inputQueue;
 
         try {
             this.inputStream = this.socket.getInputStream();

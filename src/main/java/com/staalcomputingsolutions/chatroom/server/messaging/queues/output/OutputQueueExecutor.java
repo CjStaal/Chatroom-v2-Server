@@ -16,10 +16,37 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.queues.output;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  *
  * @author Charles Joseph Staal
  */
 public class OutputQueueExecutor {
     
+    private ExecutorService executor;
+
+    private boolean started = false;
+
+    public OutputQueueExecutor() {
+        executor = Executors.newSingleThreadExecutor();
+    }
+
+    public void start() {
+        if (started) {
+
+        } else {
+            executor.execute(new OutputExecutor());
+        }
+    }
+
+    public class OutputExecutor implements Runnable {
+
+        @Override
+        public void run() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    }
 }

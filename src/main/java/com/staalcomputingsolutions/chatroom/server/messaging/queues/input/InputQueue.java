@@ -16,11 +16,10 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.queues.input;
 
-import java.util.Collection;
+import com.staalcomputingsolutions.chatroom.server.messaging.queues.output.ChatMessage;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This is the object used to queue the messages that are outgoing. This is a
@@ -38,16 +37,17 @@ import java.util.concurrent.TimeUnit;
  */
 public final class InputQueue {
 
-    private static InputQueue instance = null;
+    private BlockingQueue<Message> inputQueue;
 
-    private static BlockingQueue<Message> outputQueue;
+    private InputQueueExecutor inputQueueExecutor;
 
     /**
      * <strong>DO NOT USE DIRECTLY</strong>
-     * This is the constructor for the OutputQueue.
+     * This is the constructor for the 
      */
-    private InputQueue() {
-        InputQueue.outputQueue = new LinkedBlockingQueue();
+    public InputQueue() {
+        this.inputQueue = new LinkedBlockingQueue();
+        this.inputQueueExecutor = new InputQueueExecutor();
     }
 
     /**
@@ -57,17 +57,12 @@ public final class InputQueue {
      * @return
      */
     public synchronized boolean add(Message message) {
-        return outputQueue.add(message);
-    }
-
-    /**
-     *
-     * @param messages
-     * @return
-     * @
-     */
-    public synchronized boolean addAll(Collection<Message> messages) {
-        return outputQueue.addAll(messages);
+        if (this.inputQueue.add(message)) {
+            this.inputQueueExecutor.start();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -75,48 +70,7 @@ public final class InputQueue {
      * @
      */
     public synchronized void clear() {
-        outputQueue.clear();
-    }
-
-    /**
-     *
-     * @param message
-     * @return
-     * @
-     */
-    public synchronized boolean contains(Message message) {
-        return outputQueue.contains(message);
-    }
-
-    /**
-     *
-     * @param messages
-     * @return
-     * @
-     */
-    public synchronized boolean containsAll(Collection<Message> messages) {
-        return outputQueue.containsAll(messages);
-    }
-
-    /**
-     *
-     * @param messages
-     * @return
-     * @
-     */
-    public synchronized int drainTo(Collection messages) {
-        return outputQueue.drainTo(messages);
-    }
-
-    /**
-     *
-     * @param messages
-     * @param maxElements
-     * @return
-     * @
-     */
-    public synchronized int drainTo(Collection messages, int maxElements) {
-        return outputQueue.drainTo(messages, maxElements);
+        this.inputQueue.clear();
     }
 
     /**
@@ -124,7 +78,7 @@ public final class InputQueue {
      * @return @
      */
     public synchronized Message element() {
-        return outputQueue.element();
+        return this.inputQueue.element();
     }
 
     /**
@@ -132,7 +86,7 @@ public final class InputQueue {
      * @return @
      */
     public synchronized boolean isEmpty() {
-        return outputQueue.isEmpty();
+        return this.inputQueue.isEmpty();
     }
 
     /**
@@ -140,30 +94,7 @@ public final class InputQueue {
      * @return @
      */
     public synchronized Iterator iterator() {
-        return outputQueue.iterator();
-    }
-
-    /**
-     *
-     * @param message
-     * @return
-     * @
-     */
-    public synchronized boolean offer(Message message) {
-        return outputQueue.offer(message);
-    }
-
-    /**
-     *
-     * @param message
-     * @param timeout
-     * @param unit
-     * @return
-     * @throws java.lang.InterruptedException
-     * @
-     */
-    public synchronized boolean offer(Message message, long timeout, TimeUnit unit) throws InterruptedException {
-        return outputQueue.offer(message, timeout, unit);
+        return this.inputQueue.iterator();
     }
 
     /**
@@ -171,7 +102,7 @@ public final class InputQueue {
      * @return @
      */
     public synchronized Message peek() {
-        return outputQueue.peek();
+        return this.inputQueue.peek();
     }
 
     /**
@@ -179,19 +110,7 @@ public final class InputQueue {
      * @return @
      */
     public synchronized Message poll() {
-        return outputQueue.poll();
-    }
-
-    /**
-     *
-     * @param timeout
-     * @param unit
-     * @return
-     * @throws InterruptedException
-     * @
-     */
-    public synchronized Message poll(Long timeout, TimeUnit unit) throws InterruptedException {
-        return outputQueue.poll(timeout, unit);
+        return this.inputQueue.poll();
     }
 
     /**
@@ -201,15 +120,7 @@ public final class InputQueue {
      * @
      */
     public synchronized void put(Message message) throws InterruptedException {
-        outputQueue.put(message);
-    }
-
-    /**
-     *
-     * @return @
-     */
-    public synchronized Message remove() {
-        return outputQueue.remove();
+        this.inputQueue.put(message);
     }
 
     /**
@@ -217,27 +128,7 @@ public final class InputQueue {
      * @return @
      */
     public synchronized int remainingCapacity() {
-        return outputQueue.remainingCapacity();
-    }
-
-    /**
-     *
-     * @param messages
-     * @return
-     * @
-     */
-    public synchronized boolean removeAll(Collection<Message> messages) {
-        return outputQueue.removeAll(messages);
-    }
-
-    /**
-     *
-     * @param messages
-     * @return
-     * @
-     */
-    public synchronized boolean retainAll(Collection<Message> messages) {
-        return outputQueue.retainAll(messages);
+        return this.inputQueue.remainingCapacity();
     }
 
     /**
@@ -245,7 +136,7 @@ public final class InputQueue {
      * @return @
      */
     public synchronized int size() {
-        return outputQueue.size();
+        return this.inputQueue.size();
     }
 
     /**
@@ -253,36 +144,6 @@ public final class InputQueue {
      * @return @throws InterruptedException
      */
     public synchronized Message take() throws InterruptedException {
-        return outputQueue.take();
-    }
-
-    /**
-     *
-     * @return @
-     */
-    public synchronized Object[] toArray() {
-        return outputQueue.toArray();
-    }
-
-    /**
-     *
-     * @param messages
-     * @return
-     * @
-     */
-    public synchronized Message[] toArray(Message[] messages) {
-        return outputQueue.toArray(messages);
-    }
-
-    /**
-     * This is the method to obtain the <code>InputQueue</code> class object.
-     *
-     * @return InputQueue the singleton InputQueue.
-     */
-    public static synchronized InputQueue getInstance() {
-        if (instance == null) {
-            instance = new InputQueue();
-        }
-        return instance;
+        return this.inputQueue.take();
     }
 }

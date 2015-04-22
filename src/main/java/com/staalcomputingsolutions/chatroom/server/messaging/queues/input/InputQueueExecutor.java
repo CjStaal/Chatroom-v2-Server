@@ -21,5 +21,9 @@ package com.staalcomputingsolutions.chatroom.server.messaging.queues.input;
  * @author Charles Joseph Staal
  */
 public class InputQueueExecutor {
+
+    void start() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

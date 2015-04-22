@@ -10,13 +10,14 @@ import java.util.List;
  *
  * @author Charles Joseph Staal
  */
-public class SystemMessage {
+public class SystemMessage extends java.util.EventObject {
     private String uuid, userName, command, hashedPass;
     private List<String> other;
     private Socket socket;
     private Object object;
     
-    public SystemMessage(){
+    public SystemMessage(SystemQueue source){
+        super(source);
         
     }
     
@@ -81,5 +82,10 @@ public class SystemMessage {
     
     public List<String> getOther(){
         return this.other;
+    }
+    
+    @Override
+    public SystemQueue getSource(){
+        return (SystemQueue) super.getSource();
     }
 }

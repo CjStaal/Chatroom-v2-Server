@@ -17,6 +17,7 @@
 package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
 import com.staalcomputingsolutions.chatroom.server.impl.Communicator;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.OutputMessage;
 
 /**
  *
@@ -24,7 +25,7 @@ import com.staalcomputingsolutions.chatroom.server.impl.Communicator;
  */
 public class OutputHandler implements Handler {
 
-    private Communicator communicator;
+    private final Communicator communicator;
 
     public OutputHandler(Communicator communicator) {
         this.communicator = communicator;
@@ -32,7 +33,8 @@ public class OutputHandler implements Handler {
 
     @Override
     public void handleMessage(Object message) {
-
+        OutputMessage om = (OutputMessage) message;
+        
     }
 
 }

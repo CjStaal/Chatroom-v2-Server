@@ -16,6 +16,7 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.InputMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.OutputMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
@@ -24,18 +25,24 @@ import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
  *
  * @author Charles Joseph Staal
  */
-public class InputSorter implements Handler{
+public class InputSorter implements Handler {
 
     private final Queue<SystemMessage> systemQueue;
     private final Queue<OutputMessage> outputQueue;
-    
-    public InputSorter(Queue<SystemMessage> systemQueue, Queue<OutputMessage> outputQueue){
+
+    public InputSorter(Queue<SystemMessage> systemQueue, Queue<OutputMessage> outputQueue) {
         this.systemQueue = systemQueue;
         this.outputQueue = outputQueue;
     }
-    
+
     @Override
     public void handleMessage(Object message) {
+        InputMessage im = (InputMessage) message;
+        if (im.getMessage().contains("CHAT")) {
+            outputQueue.add(MessageBuilder.outputMessage(im));
+        } else if (im.getMessage().contains("SYSTEM")) {
+            systemQueue.add(MessageBuilder.systemMessage(im));
+        }
     }
-    
+
 }

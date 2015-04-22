@@ -16,20 +16,26 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.executors;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
+import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 
 /**
  *
  * @author Charles Joseph Staal
  */
-public class InputExecutor extends Executor {
+public class InputHandler implements Handler{
 
-
-    public InputExecutor() {
+    private final Queue<SystemMessage> systemQueue;
+    private final Queue<ChatMessage> outputQueue;
+    
+    public InputHandler(Queue<SystemMessage> systemQueue, Queue<ChatMessage> outputQueue){
+        this.systemQueue = systemQueue;
+        this.outputQueue = outputQueue;
     }
-
     @Override
-    public void run() {
-        started = true;
+    public void handleMessage(Object take) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

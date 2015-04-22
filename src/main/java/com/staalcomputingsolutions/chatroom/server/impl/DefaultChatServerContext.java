@@ -16,9 +16,8 @@
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.executors.InputExecutor;
-import com.staalcomputingsolutions.chatroom.server.messaging.executors.OutputExecutor;
-import com.staalcomputingsolutions.chatroom.server.messaging.executors.SystemExecutor;
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.Executor;
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.Handler;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
@@ -34,33 +33,41 @@ public class DefaultChatServerContext implements ChatServerContext{
     private Queue<ChatMessage> outputQueue;
     private Queue<SystemMessage> systemQueue;
 
-    private InputExecutor inputExecutor;
-    private OutputExecutor outputExecutor;
-    private SystemExecutor systemExecutor;
+    private Executor inputExecutor;
+    private Executor outputExecutor;
+    private Executor systemExecutor;
+    
+    private Handler inputHandler;
+    private Handler outputHandler;
+    private Handler systemHandler;
 
     public DefaultChatServerContext() {
 
-        inputExecutor = new InputExecutor();
-        outputExecutor = new OutputExecutor();
-        systemExecutor = new SystemExecutor();
+        inputExecutor = new Executor();
+        outputExecutor = new Executor();
+        systemExecutor = new Executor();
 
         inputQueue = new Queue(inputExecutor);
         outputQueue = new Queue(outputExecutor);
         systemQueue = new Queue(systemExecutor);
+        
+        inputExecutor.setQueue(inputQueue);
+        outputExecutor.setQueue(outputQueue);
+        systemExecutor.setQueue(systemQueue);
     }
 
     @Override
-    public InputExecutor getInputExecutor() {
+    public Executor getInputExecutor() {
         return inputExecutor;
     }
 
     @Override
-    public OutputExecutor getOutputExecutor() {
+    public Executor getOutputExecutor() {
         return outputExecutor;
     }
 
     @Override
-    public SystemExecutor getSystemExecutor() {
+    public Executor getSystemExecutor() {
         return systemExecutor;
     }
 
@@ -79,15 +86,15 @@ public class DefaultChatServerContext implements ChatServerContext{
         return this.systemQueue;
     }
 
-    public void setInputExecutor(InputExecutor inputExecutor) {
+    public void setInputExecutor(Executor inputExecutor) {
         this.inputExecutor = inputExecutor;
     }
 
-    public void setOutputExecutor(OutputExecutor outputExecutor) {
+    public void setOutputExecutor(Executor outputExecutor) {
         this.outputExecutor = outputExecutor;
     }
 
-    public void setSystemExecutor(SystemExecutor systemExecutor) {
+    public void setSystemExecutor(Executor systemExecutor) {
         this.systemExecutor = systemExecutor;
     }
 

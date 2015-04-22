@@ -16,9 +16,7 @@
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.executors.InputExecutor;
-import com.staalcomputingsolutions.chatroom.server.messaging.executors.OutputExecutor;
-import com.staalcomputingsolutions.chatroom.server.messaging.executors.SystemExecutor;
+import com.staalcomputingsolutions.chatroom.server.messaging.executors.Executor;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
@@ -30,15 +28,15 @@ import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
  */
 public interface ChatServerContext {
 
-    InputExecutor getInputExecutor();
+    Executor getInputExecutor();
 
     Queue<Message> getInputQueue();
 
-    OutputExecutor getOutputExecutor();
+    Executor getOutputExecutor();
 
     Queue<ChatMessage> getOutputQueue();
 
-    SystemExecutor getSystemExecutor();
+    Executor getSystemExecutor();
 
     Queue<SystemMessage> getSystemQueue();
     

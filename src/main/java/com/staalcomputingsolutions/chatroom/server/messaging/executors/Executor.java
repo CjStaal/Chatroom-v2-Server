@@ -16,22 +16,35 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.executors;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Charles Joseph Staal
  */
-public abstract class Executor implements Runnable{
+public class Executor implements Runnable{
     
     protected final ExecutorService executor;
 
+    protected Queue queue;
+    protected Handler handler;
     protected boolean started = false;
 
     public Executor(){
         executor = Executors.newSingleThreadExecutor();
         
+    }
+    
+    public void setHandler(Handler handler){
+        this.handler = handler;
+    }
+    
+    public void setQueue(Queue queue){
+        this.queue = queue;
     }
     
     public void start() {
@@ -46,5 +59,19 @@ public abstract class Executor implements Runnable{
     public void stop() {
         started = false;
     }
+
+    @Override
+    public void run() {
+        started = true;
+        while(!queue.isEmpty()){
+            try {
+                handler.handleMessage(queue.take());
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    
 
 }

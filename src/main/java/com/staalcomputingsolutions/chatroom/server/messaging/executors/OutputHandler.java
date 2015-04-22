@@ -20,14 +20,11 @@ package com.staalcomputingsolutions.chatroom.server.messaging.executors;
  *
  * @author Charles Joseph Staal
  */
-public class SystemExecutor extends Executor {
-
-    public SystemExecutor() {
-    }
+public class OutputHandler implements Handler{
 
     @Override
-    public void run() {
-        started = true;
+    public void handleMessage(Object take) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

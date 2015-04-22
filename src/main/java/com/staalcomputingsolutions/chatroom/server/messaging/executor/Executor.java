@@ -64,13 +64,14 @@ public class Executor implements Runnable{
     @Override
     public void run() {
         started = true;
-        while(!queue.isEmpty()){
+        while(!queue.isEmpty() && started){
             try {
                 handler.handleMessage(queue.take());
             } catch (InterruptedException ex) {
                 Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        started = false;
     }
     
     

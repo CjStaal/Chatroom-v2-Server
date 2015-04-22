@@ -17,6 +17,7 @@
 package com.staalcomputingsolutions.chatroom.server.users;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
@@ -68,9 +69,13 @@ public class UserManager {
     public synchronized void removeClient(String privateUUID) {
         removeClient(getUserConnectionFromPrivateUUID(privateUUID));
     }
-    
-    public synchronized void removeClient(UserConnection uc){
-        if(!uc.getSocket().isClosed()){
+
+    /**
+     * 
+     * @param uc 
+     */
+    public synchronized void removeClient(UserConnection uc) {
+        if (!uc.getSocket().isClosed()) {
             uc.close();
         }
         this.userList.remove(uc);
@@ -84,6 +89,18 @@ public class UserManager {
      */
     public synchronized ArrayList<UserConnection> getUserList() {
         return this.userList;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public synchronized HashMap<String, String> getUsernameList() {
+        HashMap<String, String> temp = new HashMap();
+        for (UserConnection uc : userList) {
+            temp.put(uc.getPublicUUID(), uc.getUsername());
+        }
+        return temp;
     }
 
     /**
@@ -114,6 +131,11 @@ public class UserManager {
         return null;
     }
 
+    /**
+     * 
+     * @param privateUUID
+     * @return 
+     */
     public UserConnection getUserConnectionFromPrivateUUID(String privateUUID) {
         for (UserConnection uc : userList) {
             if (uc.getPrivateUUID().equals(privateUUID)) {

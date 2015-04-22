@@ -21,5 +21,13 @@ package com.staalcomputingsolutions.chatroom.server.messaging.messages;
  * @author Charles Joseph Staal
  */
 public interface Message {
+
+    String getMessage();
+
+    String getPrivateUUIDOfSender();
+
+    void setMessage(String message);
+
+    void setPrivateUUIDOfSender(String privateUUIDOfSender);
     
 }

@@ -20,6 +20,31 @@ package com.staalcomputingsolutions.chatroom.server.messaging.messages;
  *
  * @author Charles Joseph Staal
  */
-public abstract class DefaultMessage implements Message{
+public abstract class DefaultMessage implements Message {
     
+    protected String privateUUIDOfSender;
+    
+    protected String message;
+    
+    public DefaultMessage(){};
+    
+    @Override
+    public void setPrivateUUIDOfSender(String privateUUIDOfSender){
+        this.privateUUIDOfSender = privateUUIDOfSender;
+    }
+    
+    @Override
+    public void setMessage(String message){
+        this.message = message;
+    }
+    
+    @Override
+    public String getPrivateUUIDOfSender(){
+        return this.privateUUIDOfSender;
+    }
+    
+    @Override
+    public String getMessage(){
+        return this.message;
+    }
 }

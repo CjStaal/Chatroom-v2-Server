@@ -20,6 +20,6 @@ package com.staalcomputingsolutions.chatroom.server.messaging.messages;
  *
  * @author Charles Joseph Staal
  */
-public class SystemMessage implements Message{
+public class SystemMessage extends DefaultMessage{
     
 }

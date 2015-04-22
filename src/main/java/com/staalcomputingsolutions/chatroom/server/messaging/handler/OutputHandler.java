@@ -17,20 +17,38 @@
 package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
 import com.staalcomputingsolutions.chatroom.server.impl.Communicator;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
 
 /**
  *
  * @author Charles Joseph Staal
  */
-public class OutputHandler implements Handler{
+public class OutputHandler implements Handler {
+
+    private Communicator communicator;
 
     public OutputHandler(Communicator communicator) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.communicator = communicator;
     }
 
     @Override
-    public void handleMessage(Object take) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void handleMessage(Object message) {
+        if (message instanceof ChatMessage) {
+            ChatMessage cm = (ChatMessage) message;
+            String from = cm.getSenderPrivateUUID();
+            String info[] = cm.getMessage().split("|");
+            StringBuilder sb = new StringBuilder();
+            if(info[0].equals("CHAT")){
+                sb.append("CHAT|");
+                
+            } else if(info[0].equals("SYSTEM")){
+                sb.append("SYSTEM|");
+            }
+            String info2[] = info[1].split(":");
+            if(info2[0].equals("PUBLIC")){
+            } else if()
+        }
+
     }
-    
+
 }

@@ -20,6 +20,6 @@ package com.staalcomputingsolutions.chatroom.server.messaging.messages;
  *
  * @author Charles Joseph Staal
  */
-public interface Message {
+public class OutputMessage implements Message {
     
 }

@@ -25,12 +25,12 @@ import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
  *
  * @author Charles Joseph Staal
  */
-public class InputHandler implements Handler{
+public class InputSorter implements Handler{
 
     private final Queue<SystemMessage> systemQueue;
     private final Queue<ChatMessage> outputQueue;
     
-    public InputHandler(Queue<SystemMessage> systemQueue, Queue<ChatMessage> outputQueue){
+    public InputSorter(Queue<SystemMessage> systemQueue, Queue<ChatMessage> outputQueue){
         this.systemQueue = systemQueue;
         this.outputQueue = outputQueue;
     }

@@ -18,7 +18,7 @@ package com.staalcomputingsolutions.chatroom.server.impl;
 
 import com.staalcomputingsolutions.chatroom.server.messaging.executor.Executor;
 import com.staalcomputingsolutions.chatroom.server.messaging.handler.Handler;
-import com.staalcomputingsolutions.chatroom.server.messaging.handler.InputHandler;
+import com.staalcomputingsolutions.chatroom.server.messaging.handler.InputSorter;
 import com.staalcomputingsolutions.chatroom.server.messaging.handler.OutputHandler;
 import com.staalcomputingsolutions.chatroom.server.messaging.handler.SystemHandler;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
@@ -59,7 +59,7 @@ public class DefaultChatServerContext implements ChatServerContext {
         outputQueue = new Queue(outputExecutor);
         systemQueue = new Queue(systemExecutor);
 
-        inputHandler = new InputHandler(systemQueue, outputQueue);
+        inputHandler = new InputSorter(systemQueue, outputQueue);
         outputHandler = new OutputHandler(communicator);
         systemHandler = new SystemHandler();
 

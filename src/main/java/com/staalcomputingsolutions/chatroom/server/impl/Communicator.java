@@ -57,7 +57,7 @@ public class Communicator {
         userManager.getUserConnectionFromPrivateUUID(privateUUIDOfReceiver).sendMessage(message);
     }
     
-    public void sendMessage(String message) {
+    private void sendMessage(String message) {
         for (UserConnection uc : this.userManager.getConnectionMap().values()) {
             if (!uc.sendMessage(message)) {
                 this.userManager.removeClient(uc.getPrivateUUID());

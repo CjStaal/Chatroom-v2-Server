@@ -37,9 +37,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public final class InputQueue {
 
-    private BlockingQueue<Message> inputQueue;
+    private final BlockingQueue<Message> inputQueue;
 
-    private InputQueueExecutor inputQueueExecutor;
+    private final InputQueueExecutor inputQueueExecutor;
 
     /**
      * <strong>DO NOT USE DIRECTLY</strong>

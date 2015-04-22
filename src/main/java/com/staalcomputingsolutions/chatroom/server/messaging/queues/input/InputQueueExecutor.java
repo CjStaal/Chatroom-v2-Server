@@ -16,14 +16,40 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.queues.input;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  *
  * @author Charles Joseph Staal
  */
 public class InputQueueExecutor {
+    private final ExecutorService executor;
 
-    void start() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private boolean started = false;
+
+    public InputQueueExecutor() {
+        executor = Executors.newSingleThreadExecutor();
+    }
+
+    public void start() {
+        if (started) {
+
+        } else {
+            executor.execute(new InputExecutor());
+        }
     }
     
+    public void stop(){
+        
+    }
+
+    public class InputExecutor implements Runnable {
+
+        @Override
+        public void run() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    }
 }

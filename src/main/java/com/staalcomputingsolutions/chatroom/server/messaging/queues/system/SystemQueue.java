@@ -23,7 +23,7 @@ public class SystemQueue {
      */
     public SystemQueue() {
         this.systemQueue = new LinkedBlockingQueue();
-        this.systemQueueExecutor = new SystemQueueExecutor();
+        this.systemQueueExecutor = new SystemQueueExecutor(this);
     }
 
     /**

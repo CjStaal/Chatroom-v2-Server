@@ -16,39 +16,10 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.queues.system;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  *
  * @author Charles Joseph Staal
  */
-public class SystemQueueExecutor implements Runnable {
-
-    private final ExecutorService executor;
-
-    private final SystemQueue systemQueue;
-
-    private boolean started = false;
-
-    public SystemQueueExecutor(SystemQueue systemQueue) {
-        this.systemQueue = systemQueue;
-        executor = Executors.newSingleThreadExecutor();
-    }
-
-    public void start() {
-        if (started) {
-
-        } else {
-            executor.execute(this);
-        }
-    }
-
-    @Override
-    public void run() {
-        while (!systemQueue.isEmpty()) {
-            SystemExecutor.execute(systemQueue.take());
-        }
-    }
-
+class SystemExecutor {
+    
 }

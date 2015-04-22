@@ -16,11 +16,35 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.executors;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  *
  * @author Charles Joseph Staal
  */
 public abstract class Executor implements Runnable{
     
-    public void start(){};
+    protected final ExecutorService executor;
+
+    protected boolean started = false;
+
+    public Executor(){
+        executor = Executors.newSingleThreadExecutor();
+        
+    }
+    
+    public void start() {
+        if (started) {
+
+        } else {
+            executor.execute(this);
+        }
+    }
+
+
+    public void stop() {
+        started = false;
+    }
+
 }

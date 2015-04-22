@@ -16,35 +16,13 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.executors;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  *
  * @author Charles Joseph Staal
  */
 class SystemExecutor extends Executor {
 
-    private final ExecutorService executor;
-
-    private boolean started = false;
-
     public SystemExecutor() {
-        executor = Executors.newSingleThreadExecutor();
-    }
-
-    @Override
-    public void start() {
-        if (started) {
-
-        } else {
-            executor.execute(this);
-        }
-    }
-
-
-    public void stop() {
-        started = false;
     }
 
     @Override

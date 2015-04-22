@@ -16,8 +16,6 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.executors;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  *
@@ -25,26 +23,8 @@ import java.util.concurrent.Executors;
  */
 public class InputExecutor extends Executor {
 
-    private final ExecutorService executor;
-
-    private boolean started = false;
 
     public InputExecutor() {
-        executor = Executors.newSingleThreadExecutor();
-    }
-
-    @Override
-    public void start() {
-        if (started) {
-
-        } else {
-            executor.execute(this);
-        }
-    }
-
-
-    public void stop() {
-        started = false;
     }
 
     @Override

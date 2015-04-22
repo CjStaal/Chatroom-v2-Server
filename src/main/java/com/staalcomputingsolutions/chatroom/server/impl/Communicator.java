@@ -44,12 +44,30 @@ public class Communicator {
         logger.debug("Created communicator object.");
     }
 
-    private void sendMessage(String message) {
+    public void sendChatMessage(String message){
+        sendMessage("CHAT{PUBLIC:MSG=" + message + "}");
+                
+    }
+    
+    public void sendSystemMessage(String message){
+        sendMessage("SYSTEM{" + message + "}");
+    }
+    
+    public void sendPrivateSystemMessage(String privateUUIDOfReceiver, String message){
+        userManager.getUserConnectionFromPrivateUUID(privateUUIDOfReceiver).sendMessage(message);
+    }
+    
+    public void sendMessage(String message) {
         for (UserConnection uc : this.userManager.getConnectionMap().values()) {
             if (!uc.sendMessage(message)) {
                 this.userManager.removeClient(uc.getPrivateUUID());
             }
         }
+    }
+    
+    public void sendPrivateMessage(String publicUUIDOfReceiver, String message){
+        String privateUUIDOfReceiver = userManager.getPrivateUUIDFromPublicUUID(publicUUIDOfReceiver);
+        userManager.getUserConnectionFromPrivateUUID(privateUUIDOfReceiver).sendMessage(message);
     }
 
     public void start() {

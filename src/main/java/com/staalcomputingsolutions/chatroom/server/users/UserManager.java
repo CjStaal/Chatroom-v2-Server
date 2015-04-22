@@ -169,5 +169,9 @@ public class UserManager {
     public String getPublicUUIDFromPrivateUUID(String privateUUID) {
         return this.privateUUIDToPublicUUID.get(privateUUID);
     }
+    
+    public UserConnection getUserConnectionFromPrivateUUID(String privateUUID){
+        return this.privateUUIDToUserConnection.get(privateUUID);
+    }
 
 }

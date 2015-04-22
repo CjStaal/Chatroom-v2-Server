@@ -16,10 +16,17 @@
  */
 package com.staalcomputingsolutions.chatroom.server.impl;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.ChatMessage;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
+import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
+
 /**
  *
  * @author Charles Joseph Staal
  */
 public class DefaultChatServerContext {
-    
+    private Queue<Message> inputQueue;
+    private Queue<ChatMessage> outputQueue;
+    private Queue<SystemMessage> systemQueue;
 }

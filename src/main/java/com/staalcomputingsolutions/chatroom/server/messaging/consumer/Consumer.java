@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.staalcomputingsolutions.chatroom.server.messaging.executor;
+package com.staalcomputingsolutions.chatroom.server.messaging.consumer;
 
 import com.staalcomputingsolutions.chatroom.server.messaging.handler.Handler;
 import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;

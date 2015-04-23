@@ -16,6 +16,7 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
+import com.staalcomputingsolutions.chatroom.server.messaging.messages.InputMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.Message;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.OutputMessage;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
@@ -27,7 +28,41 @@ import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMess
 public class MessageBuilder {
 
     public static OutputMessage outputMessage(Message message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        OutputMessage om = new OutputMessage();
+        
+        om.setPrivateUUIDOfSender(message.getPrivateUUIDOfSender());
+
+        String[] info0 = message.getMessage().split("|");
+
+        StringBuilder sb = new StringBuilder();
+
+        switch (info0[0]) {
+            case "CHAT":
+                om.setChatMessage(true);
+                sb.append("CHAT|");
+                break;
+            case "SYSTEM":
+                om.setChatMessage(false);
+                sb.append("SYSTEM|");
+                break;
+        }
+
+        info0 = info0[1].split(":");
+        String[] info1 = info0[1].split(",");
+        
+        switch (info0[1]) {
+            case "PUBLIC":
+                om.setPublicMessage(true);
+                sb.append("PUBLIC:");
+                
+                break;
+            case "PRIVATE":
+                om.setPublicMessage(false);
+                sb.append("PRIVATE:");
+                break;
+        }
+
+        return om;
     }
 
     public static SystemMessage systemMessage(Message message) {
@@ -35,7 +70,7 @@ public class MessageBuilder {
     }
 
     public static Message buildMessage(String privateUUID, String receiveMessage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new InputMessage(privateUUID, receiveMessage);
     }
-    
+
 }

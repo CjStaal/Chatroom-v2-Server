@@ -21,5 +21,10 @@ package com.staalcomputingsolutions.chatroom.server.messaging.messages;
  * @author Charles Joseph Staal
  */
 public class InputMessage extends DefaultMessage{
+
+    public InputMessage(String privateUUIDOfSender, String message) {
+        this.privateUUIDOfSender = privateUUIDOfSender;
+        this.message = message;
+    }
     
 }

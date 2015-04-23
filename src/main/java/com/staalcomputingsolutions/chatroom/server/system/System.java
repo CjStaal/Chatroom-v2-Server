@@ -17,7 +17,8 @@
 package com.staalcomputingsolutions.chatroom.server.system;
 
 /**
- *
+ * SystemMessages get passed to this from the SystemHandler and execute.
+ * 
  * @author Charles Joseph Staal
  */
 public class System {

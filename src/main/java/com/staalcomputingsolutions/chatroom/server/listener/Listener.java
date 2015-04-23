@@ -17,7 +17,8 @@
 package com.staalcomputingsolutions.chatroom.server.listener;
 
 /**
- *
+ * Listens for incoming connections and passes them in to the SystemQueue.
+ * 
  * @author Charles Joseph Staal
  */
 public class Listener {

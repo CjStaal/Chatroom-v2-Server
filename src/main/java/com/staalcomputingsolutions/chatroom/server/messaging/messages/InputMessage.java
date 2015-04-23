@@ -17,7 +17,8 @@
 package com.staalcomputingsolutions.chatroom.server.messaging.messages;
 
 /**
- *
+ * The object that is used for input messages.
+ * 
  * @author Charles Joseph Staal
  */
 public class InputMessage extends DefaultMessage{

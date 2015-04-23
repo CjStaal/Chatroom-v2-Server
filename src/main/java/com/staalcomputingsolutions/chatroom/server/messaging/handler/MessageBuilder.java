@@ -22,7 +22,8 @@ import com.staalcomputingsolutions.chatroom.server.messaging.messages.OutputMess
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMessage;
 
 /**
- *
+ * Builds messages.
+ * 
  * @author Charles Joseph Staal
  */
 public class MessageBuilder {

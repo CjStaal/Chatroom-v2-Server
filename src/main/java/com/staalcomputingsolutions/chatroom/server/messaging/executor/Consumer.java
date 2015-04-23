@@ -24,10 +24,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Grabs messages from the relevant queue and passes them off to the handler.
  * @author Charles Joseph Staal
  */
-public class Executor implements Runnable{
+public class Consumer implements Runnable{
     
     protected final ExecutorService executor;
 
@@ -35,7 +35,7 @@ public class Executor implements Runnable{
     protected Handler handler;
     protected boolean started = false;
 
-    public Executor(){
+    public Consumer(){
         executor = Executors.newSingleThreadExecutor();
         
     }
@@ -68,7 +68,7 @@ public class Executor implements Runnable{
             try {
                 handler.handleMessage(queue.take());
             } catch (InterruptedException ex) {
-                Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         started = false;

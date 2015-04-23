@@ -17,7 +17,8 @@
 package com.staalcomputingsolutions.chatroom.server.messaging.messages;
 
 /**
- *
+ * The message interface.
+ * 
  * @author Charles Joseph Staal
  */
 public interface Message {

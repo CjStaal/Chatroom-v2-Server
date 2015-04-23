@@ -17,7 +17,7 @@
 package com.staalcomputingsolutions.chatroom.server.messaging.handler;
 
 /**
- *
+ * Handles system messages and passes them off to the System.
  * @author Charles Joseph Staal
  */
 public class SystemHandler implements Handler {

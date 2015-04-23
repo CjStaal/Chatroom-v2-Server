@@ -17,7 +17,8 @@
 package com.staalcomputingsolutions.chatroom.server.messaging.messages;
 
 /**
- *
+ * The object that is used for system messaging.
+ * 
  * @author Charles Joseph Staal
  */
 public class SystemMessage extends DefaultMessage {

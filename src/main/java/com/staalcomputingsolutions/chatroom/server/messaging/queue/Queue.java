@@ -16,12 +16,14 @@
  */
 package com.staalcomputingsolutions.chatroom.server.messaging.queue;
 
-import com.staalcomputingsolutions.chatroom.server.messaging.executor.Executor;
+import com.staalcomputingsolutions.chatroom.server.messaging.executor.Consumer;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
+ * The generic queue, it is used for input, output, and system mesages.
+ * 
  * @author Charles Joseph Staal
  * @param <T> The type of message.
  */
@@ -29,9 +31,9 @@ public final class Queue<T> {
 
     private final BlockingQueue<T> queue;
 
-    private final Executor queueExecutor;
+    private final Consumer queueExecutor;
 
-    public Queue(Executor queueExecutor) {
+    public Queue(Consumer queueExecutor) {
         this.queue = new LinkedBlockingQueue();
         this.queueExecutor = queueExecutor;
     }

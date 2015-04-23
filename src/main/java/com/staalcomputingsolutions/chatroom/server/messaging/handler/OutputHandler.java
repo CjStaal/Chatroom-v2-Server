@@ -20,7 +20,8 @@ import com.staalcomputingsolutions.chatroom.server.impl.Communicator;
 import com.staalcomputingsolutions.chatroom.server.messaging.messages.OutputMessage;
 
 /**
- *
+ * Handles the output of outgoing messages to Communicator.
+ * 
  * @author Charles Joseph Staal
  */
 public class OutputHandler implements Handler {

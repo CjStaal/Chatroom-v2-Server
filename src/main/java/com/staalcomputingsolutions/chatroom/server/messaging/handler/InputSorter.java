@@ -22,6 +22,8 @@ import com.staalcomputingsolutions.chatroom.server.messaging.messages.SystemMess
 import com.staalcomputingsolutions.chatroom.server.messaging.queue.Queue;
 
 /**
+ * Handles the InputMessages from the input queue, builds them in to a chat or
+ * system message and passes them in to the relevant queue.
  *
  * @author Charles Joseph Staal
  */

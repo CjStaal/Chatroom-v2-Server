@@ -17,7 +17,8 @@
 package com.staalcomputingsolutions.chatroom.server.messaging.messages;
 
 /**
- *
+ * The object for messages to be output.
+ * 
  * @author Charles Joseph Staal
  */
 public class OutputMessage extends DefaultMessage {

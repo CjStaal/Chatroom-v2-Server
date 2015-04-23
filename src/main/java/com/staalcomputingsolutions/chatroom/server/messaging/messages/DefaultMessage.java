@@ -17,7 +17,8 @@
 package com.staalcomputingsolutions.chatroom.server.messaging.messages;
 
 /**
- *
+ * The default message class, every message has these methods and variables.
+ * 
  * @author Charles Joseph Staal
  */
 public abstract class DefaultMessage implements Message {
